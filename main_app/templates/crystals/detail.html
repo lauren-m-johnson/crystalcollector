@@ -8,6 +8,8 @@
     <span class="card-title">{{ crystal.name }}</span>
     <p>Hardness: {{ crystal.hardness }}</p>
     <p>Crystal Structure: {{ crystal.structure|linebreaks }}</p>
+    <p>Color: {{ crystal.color }}</p>
+    <p>Transparency: {{ crystal.transparency }}</p>
   </div>
   <div class="card-action">
     <a href="{% url 'crystals_update' crystal.id %}">Edit</a>

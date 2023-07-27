@@ -2,10 +2,6 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Crystal
 
-# crystals = [
-#     {'name': 'Fluorite', 'hardness': 4, 'structure': 'cubic'},
-#     {'name': 'Diamond', 'hardness': 10, 'structure': 'cubic'},
-# ]
 def home(request):
     return render(request, 'home.html')
 
@@ -28,7 +24,7 @@ class CrystalCreate(CreateView):
 
 class CrystalUpdate(UpdateView):
     model = Crystal
-    fields = ['hardness', 'structure']
+    fields = ['hardness', 'structure', 'color', 'transparency']
 
 class CrystalDelete(DeleteView):
     model = Crystal

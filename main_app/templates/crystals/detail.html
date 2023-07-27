@@ -3,18 +3,50 @@
 
 <h1>Crystal Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ crystal.name }}</span>
-    <p>Hardness: {{ crystal.hardness }}</p>
-    <p>Crystal Structure: {{ crystal.structure|linebreaks }}</p>
-    <p>Color: {{ crystal.color }}</p>
-    <p>Transparency: {{ crystal.transparency }}</p>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ crystal.name }}</span>
+        <p>Hardness: {{ crystal.hardness }}</p>
+        <p>Crystal Structure: {{ crystal.structure|linebreaks }}</p>
+        <p>Color: {{ crystal.color }}</p>
+        <p>Transparency: {{ crystal.transparency }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'crystals_update' crystal.id %}">Edit</a>
+        <a href="{% url 'crystals_delete' crystal.id %}">Delete</a>
+      </div>
+    </div>
   </div>
-  <div class="card-action">
-    <a href="{% url 'crystals_update' crystal.id %}">Edit</a>
-    <a href="{% url 'crystals_delete' crystal.id %}">Delete</a>
+  <div class="col s6">
+    <form action="{% url 'add_aquired' crystal.id %}" method="POST">
+      {% csrf_token %}
+      {{ aquired_form.as_p }}
+      <input type="submit" class="btn" value="Add Location">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+        {% for aquired in crystal.aquired_set.all %}
+          <tr>
+            <td>{{aquired.date}}</td>
+            <td>{{aquired.location}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
-
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });  
+</script>  
 {% endblock %}

@@ -8,5 +8,6 @@ urlpatterns = [
     path('crystals/<int:crystal_id>/', views.crystals_detail, name='detail'),
     path('crystals/create/', views.CrystalCreate.as_view(), name='crystals_create'),
     path('crystals/<int:pk>/update/', views.CrystalUpdate.as_view(), name='crystals_update'),
-    path('crystals/<int:pk>/delete/', views.CrystalDelete.as_view(), name='crystals_delete')
+    path('crystals/<int:pk>/delete/', views.CrystalDelete.as_view(), name='crystals_delete'),
+    path('crystals/<int:crystal_id>/add_aquired/', views.add_aquired, name='add_aquired'),
 ]

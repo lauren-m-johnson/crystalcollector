@@ -9,6 +9,10 @@
     <p>Hardness: {{ crystal.hardness }}</p>
     <p>Crystal Structure: {{ crystal.structure|linebreaks }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'crystals_update' crystal.id %}">Edit</a>
+    <a href="{% url 'crystals_delete' crystal.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}

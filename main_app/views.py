@@ -18,20 +18,18 @@ def crystals_index(request):
 
 def crystals_detail(request, crystal_id):
     crystal = Crystal.objects.get(id=crystal_id)
+    id_list = crystal.props.all().values_list('id')
+    props_crystal_doesnt_have = Prop.objects.exclude(id__in=id_list)
     aquired_form = AquiredForm()
-    return render(request, 'crystals/detail.html', { 'crystal': crystal, 'aquired_form': aquired_form})
-
-def add_aquired(request, crystal_id):
-    form = AquiredForm(request.POST)
-    if form.is_valid():
-        new_aquired = form.save(commit=False)
-        new_aquired.crystal_id = crystal_id
-        new_aquired.save()
-    return redirect('detail', crystal_id=crystal_id)
+    return render(request, 'crystals/detail.html', {
+        'crystal': crystal,
+        'aquired_form': aquired_form,
+        'props': props_crystal_doesnt_have
+        })
 
 class CrystalCreate(CreateView):
     model = Crystal
-    fields = '__all__'
+    fields = ['name', 'hardness', 'structure', 'color', 'transparency']
 
 class CrystalUpdate(UpdateView):
     model = Crystal
@@ -40,6 +38,14 @@ class CrystalUpdate(UpdateView):
 class CrystalDelete(DeleteView):
     model = Crystal
     success_url = '/crystals'
+
+def add_aquired(request, crystal_id):
+    form = AquiredForm(request.POST)
+    if form.is_valid():
+        new_aquired = form.save(commit=False)
+        new_aquired.crystal_id = crystal_id
+        new_aquired.save()
+    return redirect('detail', crystal_id=crystal_id)
 
 class PropList(ListView):
   model = Prop
@@ -58,3 +64,11 @@ class PropUpdate(UpdateView):
 class PropDelete(DeleteView):
   model = Prop
   success_url = '/props'
+
+def assoc_prop(request, crystal_id, prop_id):
+   Crystal.objects.get(id=crystal_id).props.add(prop_id)
+   return redirect('detail', crystal_id=crystal_id)
+
+def unassoc_prop(request, crystal_id, prop_id):
+   Crystal.objects.get(id=crystal_id).props.remove(prop_id)
+   return redirect('detail', crystal_id=crystal_id)

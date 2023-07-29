@@ -40,6 +40,53 @@
     </table>
   </div>
 </div>
+
+  <hr>
+  <div class="row">
+    <div class="col s6">
+      <h3>{{ crystal.name }}'s Properties</h3>
+      {% if crystal.props.count %}
+        {% for prop in crystal.props.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+                {{ prop.property }}
+              </span>
+            </div>
+            <div class="card-action">
+              <form action="{% url 'unassoc_prop' crystal.id prop.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn">Remove</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h5>No Properties</h5>
+      {% endif %}
+    </div>
+    <div class="col s6">
+      <h3>Available Properties</h3>
+      {% if props.count %}
+        {% for prop in props.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+               {{ prop.property }}
+              </span>
+            </div>
+            <div class="card-action">
+              <form action="{% url 'assoc_prop' crystal.id prop.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn">Add</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h5>{{crystal.property}} Already Has All Properties Available</h5>
+      {% endif %}
+    </div>
 <script>
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {

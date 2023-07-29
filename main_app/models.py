@@ -17,9 +17,10 @@ class Crystal(models.Model):
     structure = models.CharField(max_length=50)
     color = models.CharField(max_length=100)
     transparency = models.CharField(max_length=50)
+    props = models.ManyToManyField(Prop)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.id})'
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'crystal_id': self.id})

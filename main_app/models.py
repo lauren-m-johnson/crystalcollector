@@ -2,6 +2,15 @@ from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+class Prop(models.Model):
+    property = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.property
+    
+    def get_absolute_url(self):
+        return reverse("props_detail", kwargs={"pk": self.id})
+    
 class Crystal(models.Model):
     name = models.CharField(max_length=50)
     hardness = models.IntegerField()

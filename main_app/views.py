@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Crystal
+from django.views.generic import ListView, DetailView
+from .models import Crystal, Prop
 from .forms import AquiredForm
 
 def home(request):
@@ -39,3 +40,21 @@ class CrystalUpdate(UpdateView):
 class CrystalDelete(DeleteView):
     model = Crystal
     success_url = '/crystals'
+
+class PropList(ListView):
+  model = Prop
+
+class PropDetail(DetailView):
+  model = Prop
+
+class PropCreate(CreateView):
+  model = Prop
+  fields = '__all__'
+
+class PropUpdate(UpdateView):
+  model = Prop
+  fields = ['property']
+
+class PropDelete(DeleteView):
+  model = Prop
+  success_url = '/props'
